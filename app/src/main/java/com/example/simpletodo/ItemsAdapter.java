@@ -13,6 +13,10 @@ import java.util.List;
 // responsible for displaying data from the model into a row in the recycler view
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
+    public interface OnClickListener {
+        void onItemClicked(int position);
+    }
+
     public interface OnLongClickListener {
         void onItemLongClicked(int position);
     }
@@ -20,11 +24,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     // defining member variable to be used in all methods
     List<String> items;
     OnLongClickListener longClickListener;
+    OnClickListener clickListener;
 
     // make a constructor (function): right-click -> generate -> constructor
-    public ItemsAdapter(List<String> items, OnLongClickListener longClickListener) {
+    public ItemsAdapter(List<String> items, OnLongClickListener longClickListener, OnClickListener clickListener) {
         this.items = items; // set member variable to variable passed into constructor
         this.longClickListener = longClickListener;
+        this.clickListener = clickListener;
+
     }
 
     // responsible for creating each view
@@ -69,6 +76,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         // update the view inside of the view holder with this data
         public void bind(String item) {
             tvItem.setText(item);
+
+            tvItem.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    clickListener.onItemClicked(getAdapterPosition());
+                }
+            });
 
             tvItem.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
