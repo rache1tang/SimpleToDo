@@ -5,8 +5,12 @@ import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +38,25 @@ public class MainActivity extends AppCompatActivity {
         items.add("Take out Trash");
         items.add("Hello");
 
-        ItemsAdapter itemsAdapter = new ItemsAdapter(items);
+        final ItemsAdapter itemsAdapter = new ItemsAdapter(items);
         rvItem.setAdapter(itemsAdapter);
         rvItem.setLayoutManager(new LinearLayoutManager(this));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String todoItem = etItem.getText().toString();
+                // add item to model
+                items.add(todoItem);
+
+                // notify that an item is inserted
+                itemsAdapter.notifyItemInserted(items.size() - 1);
+
+                // show confirmation message that text was added
+                Toast.makeText(getApplicationContext(), "'" + todoItem + "'" + " was added :)", Toast.LENGTH_SHORT).show();
+
+                etItem.setText(""); // clear text once submitted
+            }
+        });
     }
 }
