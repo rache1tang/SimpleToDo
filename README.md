@@ -28,5 +28,5 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-[App Demo Link]
+[App Demo Link] https://github.com/rache1tang/SimpleToDo/raw/master/simpletodo.gif
 GIF created with [Kap](http://www.getkap.co).
